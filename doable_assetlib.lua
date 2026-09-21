@@ -324,7 +324,7 @@ function DoableSlotManager:LoadAllFromConfig()
             outfit = nil
         end
 
-        local slot_name = string.format(slot_format, tostring(slot_name))
+        local slot_name = string.gsub(slot_name, "doableslot__", "")
         local outfit = tostring(outfit)
 
         self.Slots[slot_name].force_update = true
