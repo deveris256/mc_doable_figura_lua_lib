@@ -5,7 +5,6 @@ Doable Asset Library
 
 REQUIRES:
 doable.doable_utils
-doable.player_config
 
 
 FULL EXAMPLE USAGE
@@ -15,6 +14,8 @@ lua file in your avatar folder.
 Don't just edit this library.)
 
 ---
+config:setName("YOURCONFIGNAMEHERE")
+
 require("doable.doable_assetlib")
 
 local SLOTID = {
@@ -51,9 +52,9 @@ action_wheel:setPage(wheel.CreateActionWheelPage())
 
 
 require('doable.doable_utils')
-local DoableConfig = require('doable.doable_player_config')
 
 local no_outfit = "_"
+local slot_format = "doableslot__%s"
 
 -- available cached callbacks:
 -- on_pet
@@ -305,38 +306,30 @@ DoableSlotManager.Slots = setmetatable({}, {
 })
 
 function DoableSlotManager:saveSlotToConfig(slot_name, asset_name)
-    local old_config_name = config:getName()
-    config:setName("DoableAssetLib_" .. DoableConfig.DoableConfig.config_basename)
-
     if asset_name == nil then
         asset_name = no_outfit
     end
 
     config:save(
-        slot_name,
+        string.format(slot_format, tostring(slot_name)),
         asset_name
     )
-    config:setName(old_config_name)
+
     return self
 end
 
 function DoableSlotManager:LoadAllFromConfig()
-    local old_config_name = config:getName()
-    config:setName("DoableAssetLib_" .. DoableConfig.DoableConfig.config_basename)
-
     for slot_name, outfit in pairs(config:load()) do
         if outfit == no_outfit then
             outfit = nil
         end
 
-        local slot_name = tostring(slot_name)
+        local slot_name = string.format(slot_format, tostring(slot_name))
         local outfit = tostring(outfit)
 
         self.Slots[slot_name].force_update = true
         self.Slots[slot_name]:setAsset(outfit)
     end
-
-    config:setName(old_config_name)
     return self
 end
 
