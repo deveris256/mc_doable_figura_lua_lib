@@ -321,6 +321,9 @@ function DoableSlotManager:saveSlotToConfig(slot_name, asset_name)
 end
 
 function DoableSlotManager:LoadAllFromConfig()
+    local old_config_name = config:getName()
+    config:setName("DoableAssetLib_" .. DoableConfig.DoableConfig.config_basename)
+
     for slot_name, outfit in pairs(config:load()) do
         if outfit == no_outfit then
             outfit = nil
@@ -332,6 +335,8 @@ function DoableSlotManager:LoadAllFromConfig()
         self.Slots[slot_name].force_update = true
         self.Slots[slot_name]:setAsset(outfit)
     end
+
+    config:setName(old_config_name)
     return self
 end
 
