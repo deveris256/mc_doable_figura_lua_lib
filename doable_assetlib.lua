@@ -62,8 +62,6 @@ DoableCallbacksCache = {
     on_toggle = {}
 }
 
-config:setName("DoableAssetLib_" .. DoableConfig.DoableConfig.config_basename)
-
 --- Optional texture item of an outfit.
 --- @class DoableTextureItem
 --- @field create fun(texture_name):DoableTextureItem
@@ -307,6 +305,9 @@ DoableSlotManager.Slots = setmetatable({}, {
 })
 
 function DoableSlotManager:saveSlotToConfig(slot_name, asset_name)
+    local old_config_name = config:getName()
+    config:setName("DoableAssetLib_" .. DoableConfig.DoableConfig.config_basename)
+
     if asset_name == nil then
         asset_name = no_outfit
     end
@@ -315,6 +316,7 @@ function DoableSlotManager:saveSlotToConfig(slot_name, asset_name)
         slot_name,
         asset_name
     )
+    config:setName(old_config_name)
     return self
 end
 
@@ -346,3 +348,4 @@ function DoableCallCallbacks(callback_name)
         end
     end
 end
+
