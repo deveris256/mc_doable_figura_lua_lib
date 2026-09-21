@@ -1,7 +1,9 @@
 
 # Figura Doable lua library
 
-It's a modular library for Minecraft Figura mod
+It's a modular library for Minecraft Figura mod. The lib is written in Lua.
+
+Create a folder called `doable` and place the modules there.
 
 **Modules available:**
 
@@ -11,3 +13,5 @@ It's a modular library for Minecraft Figura mod
 
 - doable_utils.lua - Common utils used by other Doable modules
 - doable_player_config.lua - Common config used by other Doable modules
+
+
